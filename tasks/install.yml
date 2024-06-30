@@ -14,8 +14,9 @@
     dest: "/home/{{ user.username }}/.oh-my-zsh"
     version: master
     update: no
-  with_items: "{{ ohmyzsh_users }}"
+  # with_items: "{{ ohmyzsh_users }}"
   when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  loop: "{{ ohmyzsh_users }}"
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
@@ -25,7 +26,8 @@
   user:
     name: '{{ user.username }}'
     shell: /bin/zsh
-  with_items: "{{ ohmyzsh_users }}"
+  # with_items: "{{ ohmyzsh_users }}"
+  loop: "{{ ohmyzsh_users }}"
   when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   loop_control:
     loop_var: user
@@ -42,7 +44,8 @@
     group: "{{ user.username }}"
     mode: '0640'
   when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
-  with_items: "{{ ohmyzsh_users }}"
+  # with_items: "{{ ohmyzsh_users }}"
+  loop: "{{ ohmyzsh_users }}"
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
@@ -50,7 +53,8 @@
 - name: Including task custom_plugins.yml
   include_tasks: custom_plugins.yml
   when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
-  with_items: "{{ ohmyzsh_users }}"
+  # with_items: "{{ ohmyzsh_users }}"
+  loop: "{{ ohmyzsh_users }}"
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
@@ -58,7 +62,8 @@
 - name: Including task custom_themes.yml
   include_tasks: custom_themes.yml
   when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
-  with_items: "{{ ohmyzsh_users }}"
+  # with_items: "{{ ohmyzsh_users }}"
+  loop: "{{ ohmyzsh_users }}"
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
@@ -70,7 +75,8 @@
     owner: "{{ user.username }}"
     group: "{{ user.username }}"
     mode: '0750'
-  with_items: "{{ ohmyzsh_users }}"
+  # with_items: "{{ ohmyzsh_users }}"
+  loop: "{{ ohmyzsh_users }}"
   when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   loop_control:
     loop_var: user
