@@ -3,10 +3,11 @@
 - name: Install dependencies
   become: true
   package:
+    name: "{{ item }}"
+    state: present
+  with_items:
     - git
     - zsh
-  state: present
-
 - name: Install Oh-My-zsh for users
   git:
     repo: "https://github.com/robbyrussell/oh-my-zsh"
