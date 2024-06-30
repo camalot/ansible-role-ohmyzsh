@@ -2,12 +2,10 @@
 
 - name: Install dependencies
   become: true
-  apt:
-    pkg:
-      - git
-      - zsh
-    state: present
-    update_cache: yes
+  package:
+    - git
+    - zsh
+  state: present
 
 - name: Install Oh-My-zsh for users
   git:

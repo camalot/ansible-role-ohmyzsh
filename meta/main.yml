@@ -32,6 +32,9 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - 20.04
+    - name: ArchLinux
+      versions:
+        - all
 
   galaxy_tags:
     - ohmyzsh
