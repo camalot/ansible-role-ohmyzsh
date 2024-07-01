@@ -11,53 +11,53 @@
 - name: Install Oh-My-zsh for users
   git:
     repo: "https://github.com/robbyrussell/oh-my-zsh"
-    dest: "/home/{{ l_user.username }}/.oh-my-zsh"
+    dest: "/home/{{ user.username }}/.oh-my-zsh"
     version: master
     update: no
   # with_items: "{{ ohmyzsh_users }}"
-  when: "((l_user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   loop: "{{ ohmyzsh_users }}"
   loop_control:
-    loop_var: l_user
-    label: '{{ l_user.username }}'
+    loop_var: user
+    label: '{{ user.username }}'
 
 - name: Set default shell for users
   become: yes
   user:
-    name: '{{ l_user.username }}'
+    name: '{{ user.username }}'
     shell: /bin/zsh
   # with_items: "{{ ohmyzsh_users }}"
   loop: "{{ ohmyzsh_users }}"
-  when: "((l_user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   loop_control:
-    loop_var: l_user
-    label: '{{ l_user.username }}'
+    loop_var: user
+    label: '{{ user.username }}'
 
 - name: Write .zshrc file from template
   become: yes
-  become_user: '{{ l_user.username }}'
+  become_user: '{{ user.username }}'
   template:
     src: 'zshrc.j2'
-    dest: '/home/{{ l_user.username }}/.zshrc'
+    dest: '/home/{{ user.username }}/.zshrc'
     backup: yes
-    owner: "{{ l_user.username }}"
-    group: "{{ l_user.username }}"
+    owner: "{{ user.username }}"
+    group: "{{ user.username }}"
     mode: '0640'
-  when: "((l_user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   # with_items: "{{ ohmyzsh_users }}"
   loop: "{{ ohmyzsh_users }}"
   loop_control:
-    loop_var: l_user
-    label: '{{ l_user.username }}'
+    loop_var: user
+    label: '{{ user.username }}'
 
 - name: Including task custom_plugins.yml
   include_tasks: custom_plugins.yml
-  when: "((l_user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   # with_items: "{{ ohmyzsh_users }}"
   loop: "{{ ohmyzsh_users }}"
   loop_control:
-    loop_var: l_user
-    label: '{{ l_user.username }}'
+    loop_var: user
+    label: '{{ user.username }}'
 
 - name: Including task custom_themes.yml
   include_tasks: custom_themes.yml
@@ -71,15 +71,15 @@
 - name: Set permissions for .oh-my-zsh
   become: yes
   file:
-    path: '/home/{{ l_user.username }}/.oh-my-zsh'
-    owner: "{{ l_user.username }}"
-    group: "{{ l_user.username }}"
+    path: '/home/{{ user.username }}/.oh-my-zsh'
+    owner: "{{ user.username }}"
+    group: "{{ user.username }}"
     mode: '0750'
   # with_items: "{{ ohmyzsh_users }}"
   loop: "{{ ohmyzsh_users }}"
-  when: "((l_user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   loop_control:
-    loop_var: l_user
-    label: '{{ l_user.username }}'
+    loop_var: user
+    label: '{{ user.username }}'
 
 ...
