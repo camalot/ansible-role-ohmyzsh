@@ -61,12 +61,12 @@
 
 - name: Including task custom_themes.yml
   include_tasks: custom_themes.yml
-  when: "((l_user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
+  when: "((user.oh_my_zsh | default({})).install | default(ohmyzsh_default_install)) | bool"
   # with_items: "{{ ohmyzsh_users }}"
   loop: "{{ ohmyzsh_users }}"
   loop_control:
-    loop_var: l_user
-    label: '{{ l_user.username }}'
+    loop_var: user
+    label: '{{ user.username }}'
 
 - name: Set permissions for .oh-my-zsh
   become: yes
